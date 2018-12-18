@@ -12,14 +12,20 @@
                  [0, 0, 0 , 0],
                  [0, 0, 0 , 0],
                  [0, 0, 0 , 0]];
-
+    var gameStart = true;
 
     function keyPush(evt) {
         switch(evt.keyCode) {
             case 37:
-                console.log('left')
-                findEmptySpaceAndPlaceNumber(board);
+                if (gameStart) {
+                    drawPlayground(board);
+                    findEmptySpaceAndPlaceNumber(board);
+                    addNumbers(board, 'left');
+                    gameStart = false;
+                }
                 drawPlayground(board);
+                addNumbers(board, 'left');
+                findEmptySpaceAndPlaceNumber(board);
                 break;
             case 38:
                 case 37:
@@ -34,15 +40,21 @@
         }
     }
 
-    function addNumbers(map, key) {
-        for (let i = 0; i <= 3 ; i++){
-            for (let j = 0; j <= 3 ; j++){
-                
 
+
+
+
+    function addNumbers(map, key) {
+        if( key == 'left') {
+            for (let j = 0; j <= 3; j++){
+                for (let i = 0; i <= 2; i++){
+                    board[j][i] = board[j][i] + board[j][i + 1]
+                    board[j][i + 1] = 0;
+                }
             }
         }
-        
     }
+
 
 
     function findEmptySpaceAndPlaceNumber(map) {
@@ -85,11 +97,13 @@
                     color = "#696969";
                 }
                 ctx.fillStyle = color;
-                ctx.fillRect(j * 100 , i * 100, 99, 99);
+                ctx.fillRect(j * 100, i * 100, 99, 99);
 
                 ctx.font = "30px Verdana";
                 ctx.fillStyle = "#FFFFFF";
-                ctx.fillText(map[i][j] ,j * 100  , i * 100);
+                if (map[i][j] != 0) {
+                    ctx.fillText(map[i][j], 40 + j * 100, 60 + i * 100);
+                }
                     
             }
         }   
