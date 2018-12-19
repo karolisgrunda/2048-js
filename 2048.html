@@ -12,20 +12,20 @@
                  [0, 0, 0 , 0],
                  [0, 0, 0 , 0],
                  [0, 0, 0 , 0]];
-    var gameStart = true;
+    var gameStart = false;
 
     function keyPush(evt) {
         switch(evt.keyCode) {
             case 37:
-                if (gameStart) {
-                    drawPlayground(board);
+                if (!gameStart) {
                     findEmptySpaceAndPlaceNumber(board);
-                    addNumbers(board, 'left');
-                    gameStart = false;
+                    drawPlayground(board);
+                    gameStart = true;
+                } else {
+                    findEmptySpaceAndPlaceNumber(board);
+                    drawPlayground(board);
+                    addNumbers();
                 }
-                drawPlayground(board);
-                addNumbers(board, 'left');
-                findEmptySpaceAndPlaceNumber(board);
                 break;
             case 38:
                 case 37:
@@ -44,15 +44,24 @@
 
 
 
-    function addNumbers(map, key) {
-        if( key == 'left') {
-            for (let j = 0; j <= 3; j++){
-                for (let i = 0; i <= 2; i++){
-                    board[j][i] = board[j][i] + board[j][i + 1]
-                    board[j][i + 1] = 0;
+    function addNumbers() {
+        let swap = false;
+
+            for (let j = 0; j <= 3; j++){      
+                if (board[j][3] == board[j][2]) {
+                    board[j][2] = board[j][2] * board[j][2];
+                    board[j][3] = 0;
+                    swap = true;                 
+                }        
+                if (board[j][1] == board[j][0]) {
+                    board[j][0] = board[j][0] * board[j][0];
+                    board[j][1] = 0;
+                }
+                if (board[j][2] == board[j][1] && swap) {
+                    board[j][1] = board[j][1] * board[j][1];
+                    board[j][2] = 0;
                 }
             }
-        }
     }
 
 
@@ -75,13 +84,14 @@
                       [0, 0, 0 , 0],
                       [0, 0, 0 , 0],
                       [0, 0, 0 , 0]];
+            console.log('gameover');
         } else {
             let randomPlace = Math.floor(Math.random() * randomPlaceArray.length);
 
             let randomX = randomPlaceArray[randomPlace][0];
             let randomY = randomPlaceArray[randomPlace][1];
-
-            board[randomX][randomY] = Math.floor(Math.random() * 2 + 1 );
+            let randomNumber = Math.floor(Math.random() * 2 + 1 )
+            board[randomX][randomY] = randomNumber + randomNumber;
             console.log(board); 
         }
     }
@@ -89,14 +99,8 @@
     function drawPlayground(map) {
         for (let i = 0; i <= 3 ; i++){
             for (let j = 0; j <= 3 ; j++){
-                if (map[i][j] == 1) {
-                    color = "#FF0000";
-                } else if (map[i][j] == 2) {
-                    color = "#901919";
-                } else {
-                    color = "#696969";
-                }
-                ctx.fillStyle = color;
+
+                ctx.fillStyle = "#696969";
                 ctx.fillRect(j * 100, i * 100, 99, 99);
 
                 ctx.font = "30px Verdana";
