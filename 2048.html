@@ -74,7 +74,7 @@
             for (let j = 0; j <= gameBoardLength - 1 ; j++ ){ //for from 0 to 2
                 if (board[i][j] > 0) {
                     for (let z = j + 1; z <= gameBoardLength; z++) { // for from 1 to 3 m
-                        if (board[i][j] == board[i][z] && zeroesInGapChecker(i ,j, z, 'row')) {
+                        if ((board[i][j] == board[i][z]) && zeroesInGapChecker(i ,j, z, 'row')) {
                             board[i][j] += board[i][j];
                             //console.log('added: ' + i + j + ' ' + i + z);
                             board[i][z] = 0;
@@ -137,7 +137,7 @@
 
     function zeroesInGapChecker(line ,min, max, rowOrColumn) {
         let status = true;
-        if (rowOrColumn = 'row') {
+        if (rowOrColumn == 'row') {
             for (let i = min + 1; i < max; i++) {
                 if (board[line][i] != 0) {
                     status = false;
@@ -145,7 +145,7 @@
                 console.log(line+' '+i + ' ' + status);
             }
         }
-        if (rowOrColumn = 'column') {
+        if (rowOrColumn == 'column') {
             for (let i = min + 1; i < max; i++) {
                 if (board[i][line] != 0) {
                     status = false;
