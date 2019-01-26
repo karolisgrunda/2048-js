@@ -8,12 +8,13 @@
         document.addEventListener("keydown", keyPush);
     }
     
-    var board = [[4, 4, 0 , 0],
-                 [4, 2, 4 , 0],
-                 [4, 0, 0 , 4],
-                 [0, 4, 0 , 4]];
+    var board = [[0, 8, 4 , 0],
+                 [8, 4, 0 , 4],
+                 [4, 0, 4 , 8],
+                 [0, 4, 8 , 0]];
     var gameStart = false;
     var gameBoardLength = board.length - 1;
+    var oldboard = board;
 
     var newX;
     var newY;
@@ -142,7 +143,6 @@
                 if (board[line][i] != 0) {
                     status = false;
                 }
-                console.log(line+' '+i + ' ' + status);
             }
         }
         if (rowOrColumn == 'column') {
@@ -150,7 +150,6 @@
                 if (board[i][line] != 0) {
                     status = false;
                 }
-                console.log(i+' '+line + ' ' + status);
             }
         }
         
